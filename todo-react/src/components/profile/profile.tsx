@@ -1,7 +1,10 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import React, { FC, ReactElement } from 'react';
+import PropTypes from 'prop-types';
 
-export const Profile: FC = (): ReactElement => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const Profile: FC = (props: any): ReactElement => {
+  const { name = 'John' } = props;
   return (
     <Box
       display="flex"
@@ -18,15 +21,19 @@ export const Profile: FC = (): ReactElement => {
         }}
       >
         <Typography variant="h4" color="text.primary">
-          J
+          {`${name.substring(0, 1).toUpperCase()}`}
         </Typography>
       </Avatar>
       <Typography variant="h6" color="text.primary">
-        Welcome, John
+        {`Welcome, ${name}`}
       </Typography>
       <Typography variant="body1" color="text.primary">
         This is your personal task manager
       </Typography>
     </Box>
   );
+};
+
+Profile.propTypes = {
+  name: PropTypes.string,
 };
