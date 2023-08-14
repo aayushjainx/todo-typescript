@@ -1,5 +1,6 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import React, { FC, ReactElement } from 'react';
+import PropTypes from 'prop-types';
 interface IProfile {
   name?: string;
 }
@@ -33,4 +34,8 @@ export const Profile: FC<IProfile> = (props): ReactElement => {
       </Typography>
     </Box>
   );
+};
+
+Profile.propTypes = {
+  name: PropTypes.string,
 };
