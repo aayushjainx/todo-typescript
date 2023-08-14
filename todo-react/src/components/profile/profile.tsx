@@ -1,9 +1,10 @@
 import { Avatar, Box, Typography } from '@mui/material';
 import React, { FC, ReactElement } from 'react';
-import PropTypes from 'prop-types';
+interface IProfile {
+  name?: string;
+}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const Profile: FC = (props: any): ReactElement => {
+export const Profile: FC<IProfile> = (props): ReactElement => {
   const { name = 'John' } = props;
   return (
     <Box
@@ -32,8 +33,4 @@ export const Profile: FC = (props: any): ReactElement => {
       </Typography>
     </Box>
   );
-};
-
-Profile.propTypes = {
-  name: PropTypes.string,
 };
