@@ -3,8 +3,20 @@ import React, { FC, ReactElement } from 'react';
 import { TaskHeader } from './_taskHeader';
 import { TaskDescription } from './_taskDescription';
 import { TaskFooter } from './_taskFooter';
+import { ITask } from './interfaces/ITask';
+import { Priority } from '../createTaskForm/enums/Priority';
+import { Status } from '../createTaskForm/enums/Status';
 
-export const Task: FC = (): ReactElement => {
+export const Task: FC<ITask> = (props): ReactElement => {
+  const {
+    title = 'Default Title',
+    date = new Date(),
+    description = 'Default Description',
+    priority = Priority.medium,
+    status = Status.completed,
+    onStatusChange = (e) => console.log(e),
+    onClick = (e) => console.log(e),
+  } = props;
   return (
     <Box
       display="flex"
@@ -21,9 +33,9 @@ export const Task: FC = (): ReactElement => {
         borderColor: 'error.light',
       }}
     >
-      <TaskHeader />
-      <TaskDescription />
-      <TaskFooter />
+      <TaskHeader title={title} date={date} />
+      <TaskDescription description={description} />
+      <TaskFooter onStatusChange={onStatusChange} onClick={onClick} />
     </Box>
   );
 };
