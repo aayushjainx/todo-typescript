@@ -5,7 +5,9 @@ import { TaskDescription } from './_taskDescription';
 import { TaskFooter } from './_taskFooter';
 import { ITask } from './interfaces/ITask';
 import { Priority } from '../createTaskForm/enums/Priority';
-import { Status } from '../createTaskForm/enums/Status';
+// import { Status } from '../createTaskForm/enums/Status';
+import PropTypes from 'prop-types';
+import { renderPriorityBorderColor } from './helpers/renderPriorityBorderColor';
 
 export const Task: FC<ITask> = (props): ReactElement => {
   const {
@@ -13,7 +15,7 @@ export const Task: FC<ITask> = (props): ReactElement => {
     date = new Date(),
     description = 'Default Description',
     priority = Priority.medium,
-    status = Status.completed,
+    // status = Status.completed,
     onStatusChange = (e) => console.log(e),
     onClick = (e) => console.log(e),
   } = props;
@@ -30,7 +32,7 @@ export const Task: FC<ITask> = (props): ReactElement => {
         backgroundColor: 'background.paper',
         borderRadius: '8px',
         border: '1px solid',
-        borderColor: 'error.light',
+        borderColor: renderPriorityBorderColor(priority),
       }}
     >
       <TaskHeader title={title} date={date} />
@@ -38,4 +40,14 @@ export const Task: FC<ITask> = (props): ReactElement => {
       <TaskFooter onStatusChange={onStatusChange} onClick={onClick} />
     </Box>
   );
+};
+
+Task.propTypes = {
+  title: PropTypes.string,
+  date: PropTypes.instanceOf(Date),
+  description: PropTypes.string,
+  priority: PropTypes.string,
+  status: PropTypes.string,
+  onStatusChange: PropTypes.func,
+  onClick: PropTypes.func,
 };
