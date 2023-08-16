@@ -1,13 +1,31 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import { DataSource } from 'typeorm';
 
 const app: Express = express();
 dotenv.config();
 
+export const AppDataStore = new DataSource({
+  type: 'postgres',
+  host: 'localhost',
+  port: 5432,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DB,
+  synchronize: true,
+});
+
 const port = process.env.PORT;
 
 app.get('/', (req: Request, res: Response) => {
-	res.send('Hello World!');
+  res.send('Hello World!');
 });
 
-app.listen(port);
+AppDataStore.initialize()
+  .then(() => {
+    app.listen(port);
+    console.log('Data Source has been initialized');
+  })
+  .catch((err) => {
+    console.error(err);
+  });
