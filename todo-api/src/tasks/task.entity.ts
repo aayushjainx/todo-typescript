@@ -1,4 +1,7 @@
-import { Entity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Tasks {}
+export class Tasks {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+}
