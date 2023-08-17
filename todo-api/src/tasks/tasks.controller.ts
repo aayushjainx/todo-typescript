@@ -10,6 +10,7 @@ export class TaskController {
           date: 'ASC',
         },
       });
+      console.log(allTasks);
     } catch (err) {
       console.error(err);
     }
