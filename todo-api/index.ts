@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { Tasks } from './src/tasks/task.entity';
+import { Tasks } from './src/tasks/tasks.entity';
 import { taskRouter } from './src/tasks/tasks.router';
 
 const app: Express = express();
