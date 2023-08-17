@@ -41,6 +41,13 @@ class TaskController {
       return res.json({ message: 'Something went wrong' }).status(500);
     }
   }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  }
 }
 
 export const taskController = new TaskController();
