@@ -1,8 +1,9 @@
-import { instanceToPlain } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { AppDataStore } from '../../index';
 import { Tasks } from './tasks.entity';
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import { UpdateResult } from 'typeorm';
 
 class TaskController {
   public async getAll(req: Request, res: Response): Promise<Response> {
@@ -25,7 +26,7 @@ class TaskController {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const newTask = new Tasks();
+    const newTask: Tasks = new Tasks();
 
     newTask.title = req.body.title;
     newTask.date = req.body.date;
@@ -46,6 +47,23 @@ class TaskController {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const task: Tasks | null = await AppDataStore.getRepository(
+        Tasks,
+      ).findOne({ where: { id: req.body.id } });
+      if (!task) return res.json({ message: 'Task not found' }).status(404);
+      let updateTask: UpdateResult = await AppDataStore.getRepository(
+        Tasks,
+      ).update(
+        req.body.id,
+        plainToInstance(Tasks, { status: req.body.status }),
+      );
+      updateTask = instanceToPlain(updateTask) as UpdateResult;
+      return res.json(updateTask).status(200);
+    } catch (_err) {
+      return res.json({ message: 'Something went wrong' }).status(500);
     }
   }
 }
