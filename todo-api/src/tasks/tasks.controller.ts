@@ -1,3 +1,4 @@
+import { instanceToPlain } from 'class-transformer';
 import { AppDataStore } from '../../index';
 import { Tasks } from './task.entity';
 
@@ -10,9 +11,11 @@ export class TaskController {
           date: 'ASC',
         },
       });
-      console.log(allTasks);
+      allTasks = instanceToPlain(allTasks) as Tasks[];
+      return allTasks;
     } catch (err) {
       console.error(err);
+      throw err;
     }
   }
 }
