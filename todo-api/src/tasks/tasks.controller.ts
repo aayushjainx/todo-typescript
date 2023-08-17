@@ -24,7 +24,22 @@ class TaskController {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    return res.status(200).json({ message: 'Task created successfully' });
+
+    const newTask = new Tasks();
+
+    newTask.title = req.body.title;
+    newTask.date = req.body.date;
+    newTask.description = req.body.description;
+    newTask.priority = req.body.priority;
+    newTask.status = req.body.status;
+
+    try {
+      let createTask = await AppDataStore.getRepository(Tasks).save(newTask);
+      createTask = instanceToPlain(createTask) as Tasks;
+      return res.json(createTask).status(201);
+    } catch (_err) {
+      return res.json({ message: 'Something went wrong' }).status(500);
+    }
   }
 }
 
