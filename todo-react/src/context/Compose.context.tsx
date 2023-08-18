@@ -10,7 +10,7 @@ export default function ComposeContext(props: IComposeContext) {
 
   return (
     <>
-      {components.reduceRight((acc, Comp: any) => {
+      {components.reduceRight((acc, Comp) => {
         return <Comp>{acc}</Comp>;
       }, children)}
     </>
