@@ -19,8 +19,10 @@ import { sendApiRequest } from '../../helpers/sendApiRequest';
 import { ICreateTask } from '../taskArea/interfaces/ICreateTask';
 
 export const CreateTaskForm: FC = (): ReactElement => {
-  const [, setTitle] = React.useState<string | undefined>(undefined);
-  const [, setDescription] = React.useState<string | undefined>(undefined);
+  const [title, setTitle] = React.useState<string | undefined>(undefined);
+  const [description, setDescription] = React.useState<string | undefined>(
+    undefined,
+  );
   const [date, setDate] = React.useState<Date | null>(new Date());
   const [status, setStatus] = React.useState<Status>(Status.todo);
   const [priority, setPriority] = React.useState<Priority>(Priority.medium);
@@ -28,6 +30,20 @@ export const CreateTaskForm: FC = (): ReactElement => {
   const createTaskMutation = useMutation((data: ICreateTask) =>
     sendApiRequest('http://localhost:3200/tasks', 'POST', data),
   );
+
+  function createTaskHandler() {
+    if (!title || !description || !date) {
+      return;
+    }
+    const task: ICreateTask = {
+      title,
+      description,
+      date: date.toString(),
+      status,
+      priority,
+    };
+    createTaskMutation.mutate(task);
+  }
 
   return (
     <Box
@@ -94,7 +110,12 @@ export const CreateTaskForm: FC = (): ReactElement => {
           />
         </Stack>
         <LinearProgress />
-        <Button variant="contained" size="large" fullWidth>
+        <Button
+          variant="contained"
+          size="large"
+          fullWidth
+          onClick={createTaskHandler}
+        >
           Create Task
         </Button>
       </Stack>
