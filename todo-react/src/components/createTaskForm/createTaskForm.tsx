@@ -14,6 +14,8 @@ import { TaskDateField } from './_taskDateField';
 import { TaskSelectField } from './_taskSelectField';
 import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
+import { useMutation } from '@tanstack/react-query';
+import { sendApiRequest } from '../../helpers/sendApiRequest';
 
 export const CreateTaskForm: FC = (): ReactElement => {
   const [, setTitle] = React.useState<string | undefined>(undefined);
@@ -21,6 +23,10 @@ export const CreateTaskForm: FC = (): ReactElement => {
   const [date, setDate] = React.useState<Date | null>(new Date());
   const [status, setStatus] = React.useState<Status>(Status.todo);
   const [priority, setPriority] = React.useState<Priority>(Priority.medium);
+
+  const createTaskMutation = useMutation((data) =>
+    sendApiRequest('http://localhost:3200/tasks', 'POST', data),
+  );
 
   return (
     <Box
