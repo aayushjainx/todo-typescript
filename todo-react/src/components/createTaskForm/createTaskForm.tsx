@@ -1,4 +1,12 @@
-import { Box, Stack, Typography } from '@mui/material';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Button,
+  LinearProgress,
+  Stack,
+  Typography,
+} from '@mui/material';
 import React, { FC, ReactElement } from 'react';
 import { TaskTitleField } from './_taskTitleField';
 import { TaskDescriptionField } from './_taskDescriptionField';
@@ -8,10 +16,8 @@ import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
 
 export const CreateTaskForm: FC = (): ReactElement => {
-  const [title, setTitle] = React.useState<string | undefined>(undefined);
-  const [description, setDescription] = React.useState<string | undefined>(
-    undefined,
-  );
+  const [, setTitle] = React.useState<string | undefined>(undefined);
+  const [, setDescription] = React.useState<string | undefined>(undefined);
   const [date, setDate] = React.useState<Date | null>(new Date());
   const [status, setStatus] = React.useState<Status>(Status.todo);
   const [priority, setPriority] = React.useState<Priority>(Priority.medium);
@@ -25,6 +31,10 @@ export const CreateTaskForm: FC = (): ReactElement => {
       px={4}
       my={6}
     >
+      <Alert severity="success" sx={{ width: '100%', marginBottom: '16px' }}>
+        <AlertTitle>Success</AlertTitle>
+        The task has been created successfully.
+      </Alert>
       <Typography mb={2} component="h2" variant="h6">
         Create A Task
       </Typography>
@@ -76,6 +86,10 @@ export const CreateTaskForm: FC = (): ReactElement => {
             ]}
           />
         </Stack>
+        <LinearProgress />
+        <Button variant="contained" size="large" fullWidth>
+          Create Task
+        </Button>
       </Stack>
     </Box>
   );
