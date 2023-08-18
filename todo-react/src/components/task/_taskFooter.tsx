@@ -8,7 +8,7 @@ export const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
   const {
     onStatusChange = (e) => console.log(e),
     onClick = (e) => console.log(e),
-    // id,
+    id,
     status,
   } = props;
   return (
@@ -23,7 +23,7 @@ export const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
         control={
           <Switch
             color="warning"
-            onChange={(e) => onStatusChange(e)}
+            onChange={(e) => onStatusChange(e, id)}
             defaultChecked={status === Status.inProgress}
           />
         }
@@ -33,7 +33,7 @@ export const TaskFooter: FC<ITaskFooter> = (props): ReactElement => {
         color="success"
         size="small"
         sx={{ color: '#ffffff' }}
-        onClick={(e) => onClick(e)}
+        onClick={(e) => onClick(e, id)}
       >
         Mark Complete
       </Button>
