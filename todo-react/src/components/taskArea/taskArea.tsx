@@ -3,10 +3,11 @@ import { Alert, Box, Grid, LinearProgress } from '@mui/material';
 import { format } from 'date-fns';
 import { TaskCounter } from '../taskCounter/taskCounter';
 import { Task } from '../task/task';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { sendApiRequest } from '../../helpers/sendApiRequest';
 import { ITaskApi } from './interfaces/ITaskApi';
 import { Status } from '../createTaskForm/enums/Status';
+import { IUpdateTask } from './interfaces/IUpdateTask';
 
 export const TaskArea: FC = (): ReactElement => {
   const { error, isLoading, data } = useQuery(['tasks'], async () => {
@@ -15,6 +16,11 @@ export const TaskArea: FC = (): ReactElement => {
       'GET',
     );
   });
+
+  const updateTaskMutation = useMutation((data: IUpdateTask) =>
+    sendApiRequest('http://localhost:3200/tasks', 'PUT', data),
+  );
+
   return (
     <Grid item md={8} px={4}>
       <Box mb={8} px={4}>
