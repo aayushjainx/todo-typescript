@@ -8,6 +8,14 @@ import { Status } from './enums/Status';
 import { Priority } from './enums/Priority';
 
 export const CreateTaskForm: FC = (): ReactElement => {
+  const [title, setTitle] = React.useState<string | undefined>(undefined);
+  const [description, setDescription] = React.useState<string | undefined>(
+    undefined,
+  );
+  const [date, setDate] = React.useState<Date | null>(new Date());
+  const [status, setStatus] = React.useState<Status>(Status.todo);
+  const [priority, setPriority] = React.useState<Priority>(Priority.medium);
+
   return (
     <Box
       display="flex"
