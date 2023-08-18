@@ -29,13 +29,17 @@ export const CreateTaskForm: FC = (): ReactElement => {
         Create A Task
       </Typography>
       <Stack sx={{ width: '100%' }} spacing={2}>
-        <TaskTitleField />
-        <TaskDescriptionField />
-        <TaskDateField />
+        <TaskTitleField onChange={(e) => setTitle(e.target.value)} />
+        <TaskDescriptionField
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <TaskDateField value={date} onChange={(date) => setDate(date)} />
         <Stack sx={{ width: '100%' }} direction="row" spacing={2}>
           <TaskSelectField
             label="Status"
             name="status"
+            value={status}
+            onChange={(e) => setStatus(e.target.value as Status)}
             items={[
               {
                 value: Status.todo,
@@ -54,6 +58,8 @@ export const CreateTaskForm: FC = (): ReactElement => {
           <TaskSelectField
             label="Priority"
             name="priority"
+            value={priority}
+            onChange={(e) => setPriority(e.target.value as Priority)}
             items={[
               {
                 value: Priority.low,
