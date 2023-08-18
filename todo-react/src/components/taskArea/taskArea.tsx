@@ -8,7 +8,7 @@ import { sendApiRequest } from '../../helpers/sendApiRequest';
 import { ITaskApi } from './interfaces/ITaskApi';
 
 export const TaskArea: FC = (): ReactElement => {
-  const { error, isLoading, data, refetch } = useQuery('tasks', async () => {
+  const { error, isLoading, data, refetch } = useQuery(['tasks'], async () => {
     return await sendApiRequest<ITaskApi[]>(
       'http://localhost:3200/tasks',
       'GET',

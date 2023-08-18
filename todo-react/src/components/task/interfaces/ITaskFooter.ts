@@ -3,4 +3,6 @@ export interface ITaskFooter {
   onClick?: (
     e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
   ) => void;
+  id: string;
+  status?: string;
 }
